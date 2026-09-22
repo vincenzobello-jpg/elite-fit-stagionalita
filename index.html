@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0F172A">
+    <meta name="description" content="Stagionalità di frutta e verdura in Italia. Valori nutrizionali, benefici e proprietà per un'alimentazione flessibile e consapevole.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Elite Fit Stagionalità">
+    <title>Stagionalità | Elite Fit Training</title>
+    
+    <!-- Manifest inlineato per PWA -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Stagionalità Elite Fit Training","short_name":"Elite Fit","description":"Guida alla stagionalità di frutta e verdura in Italia","start_url":"./","display":"standalone","background_color":"%23F8FAFC","theme_color":"%230F172A","orientation":"portrait","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/2921/2921822.png","sizes":"192x192","type":"image/png"},{"src":"https://cdn-icons-png.flaticon.com/512/2921/2921822.png","sizes":"512x512","type":"image/png"}]}'>
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        elite: {
+                            dark: '#0F172A',
+                            primary: '#10B981',
+                            accent: '#F59E0B',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+        }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .month-btn {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .month-btn:active {
+            transform: scale(0.95);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+        }
+        /* Scrollbar personalizzata per desktop */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    </style>
+</head>
+<body class="bg-elite-light text-elite-dark antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-elite-dark text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-5xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 sm:w-11 sm:h-11 bg-elite-primary rounded-full flex items-center justify-center font-bold text-elite-dark text-base sm:text-lg shrink-0 shadow-md">EF</div>
+                <div class="min-w-0">
+                    <h1 class="font-bold text-sm sm:text-lg leading-tight truncate">Elite Fit Training</h1>
+                    <p class="text-[10px] sm:text-xs text-gray-400 truncate hidden sm:block">Alimentazione Flessibile & Consapevole</p>
+                </div>
+            </div>
+            <a href="https://www.elitefittraining.it/" target="_blank" rel="noopener" class="text-[11px] sm:text-xs bg-elite-primary text-elite-dark px-3 sm:px-4 py-2 rounded-full font-semibold hover:bg-emerald-400 transition shrink-0 shadow-sm">
+                Inizia il Percorso
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-5xl mx-auto w-full px-4 py-6 sm:py-8">
+        
+        <!-- Intro -->
+        <div class="mb-6 sm:mb-8 text-center px-2">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 tracking-tight">Stagionalità Intelligente</h2>
+            <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">Scegli il cibo al picco delle sue proprietà nutrizionali. Il primo passo per un'alimentazione consapevole.</p>
+        </div>
+
+        <!-- Month Selector (Responsive Grid) -->
+        <div class="mb-6 sm:mb-8">
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2" id="monthSelector">
+                <!-- Generato via JS -->
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex bg-gray-200 p-1 rounded-xl mb-6 sm:mb-8 max-w-md mx-auto">
+            <button onclick="setTab('frutta')" id="tab-frutta" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 bg-white text-elite-dark shadow-sm">
+                🍎 Frutta
+            </button>
+            <button onclick="setTab('verdura')" id="tab-verdura" class="flex-1 py-2.5 rounded-lg text-sm font-semibold text-gray-500 transition-all duration-300 hover:text-elite-dark">
+                🥦 Verdura
+            </button>
+        </div>
+
+        <!-- Counter -->
+        <div class="text-center mb-4">
+            <span id="counter" class="inline-block text-xs sm:text-sm text-gray-500 font-medium bg-white px-3 py-1 rounded-full border border-gray-200"></span>
+        </div>
+
+        <!-- Content Grid -->
+        <div id="contentGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 pb-20">
+            <!-- Cards generate via JS -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-elite-dark text-gray-400 py-8 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <p class="text-sm mb-2">© 2026 Elite Fit Training. Tutti i diritti riservati.</p>
+            <p class="text-xs mb-4 italic">"Scienza al posto della moda. Educazione al posto della dipendenza."</p>
+            <div class="flex justify-center gap-4 text-elite-primary text-sm flex-wrap">
+                <a href="https://www.elitefittraining.it/" target="_blank" rel="noopener" class="hover:text-white transition">Sito Ufficiale</a>
+                <span class="hidden sm:inline">•</span>
+                <a href="https://www.instagram.com/elite.fit.training.coach/" target="_blank" rel="noopener" class="hover:text-white transition">Instagram</a>
+                <span>•</span>
+                <a href="https://www.elitefittraining.it/" target="_blank" rel="noopener" class="hover:text-white transition">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Database Stagionalità Italia
+        const database = [
+            // FRUTTA
+            { name: "Mela", category: "frutta", months: [1,2,3,4,5,6,7,8,9,10,11,12], calories: 52, nutrients: "Vitamina C, Potassio, Fibre (Pectina)", benefits: "Regola l'intestino, sazia a lungo, controlla la glicemia.", properties: "Antiossidante, antinfiammatoria, ipocolesterolemizzante.", tip: "Mangiala con la buccia (se bio) per massimizzare le fibre e il senso di sazietà." },
+            { name: "Arancia", category: "frutta", months: [1,2,3,4,11,12], calories: 47, nutrients: "Vitamina C, Folati, Flavonoidi", benefits: "Rafforza il sistema immunitario, favorisce l'assorbimento del ferro.", properties: "Antiossidante, diuretica, protettiva per i vasi sanguigni.", tip: "Spremuta al mattino: la vitamina C aiuta a gestire il picco glicemico della colazione." },
+            { name: "Fragola", category: "frutta", months: [4,5,6], calories: 32, nutrients: "Vitamina C, Manganese, Acido Folico", benefits: "Combatte i radicali liberi, amica della pelle e del cuore.", properties: "Antinfiammatoria, depurativa, basso indice glicemico.", tip: "Perfetta come spuntino pre o post micro-allenamento: leggera e ricca di acqua." },
+            { name: "Albicocca", category: "frutta", months: [6,7], calories: 48, nutrients: "Beta-carotene, Potassio, Vitamina A", benefits: "Protegge la vista, favorisce l'abbronzatura, contrasta la stanchezza.", properties: "Rimineralizzante, lassativa (se matura), antiossidante.", tip: "Ottima essiccata come snack energetico, ma attenzione alle porzioni per la densità calorica." },
+            { name: "Pesca", category: "frutta", months: [6,7,8], calories: 39, nutrients: "Potassio, Vitamina C, Fibre", benefits: "Idratante, favorisce la diuresi, leggera per lo stomaco.", properties: "Diuretica, lassativa, antiossidante.", tip: "Ideale post-workout estivo per reintegrare i sali minerali persi con il sudore." },
+            { name: "Anguria", category: "frutta", months: [7,8], calories: 30, nutrients: "Licopene, Citrullina, Acqua (92%)", benefits: "Idratazione profonda, sollievo muscolare, rinfrescante.", properties: "Diuretica, vasodilatatrice (grazie alla citrullina), a bassissime calorie.", tip: "La citrullina aiuta il recupero muscolare. Perfetta dopo un allenamento estivo." },
+            { name: "Uva", category: "frutta", months: [8,9,10], calories: 67, nutrients: "Zuccheri naturali, Vitamina K, Polifenoli", benefits: "Energia immediata, protezione cardiovascolare.", properties: "Antiossidante (resveratrolo), energizzante, leggermente lassativa.", tip: "Sostituisci gli snack processati con un piccolo grappolo: energia naturale e antiossidanti." },
+            { name: "Fico", category: "frutta", months: [8,9], calories: 74, nutrients: "Fibre, Calcio, Potassio", benefits: "Combatte la stitichezza, fornisce energia rapida.", properties: "Emolliente, lassativo, rimineralizzante.", tip: "Abbinalo a una fonte proteica (es. yogurt greco) per bilanciare l'indice glicemico." },
+            { name: "Castagna", category: "frutta", months: [10,11], calories: 196, nutrients: "Carboidrati complessi, Fibre, Vitamine B", benefits: "Energia a lento rilascio, saziante, senza glutine.", properties: "Rimineralizzante (ferro, potassio), energetica, antinfiammatoria.", tip: "Non è un frutto leggero: considerala una fonte di carboidrati, non un extra." },
+            { name: "Kiwi", category: "frutta", months: [11,12,1,2], calories: 61, nutrients: "Vitamina C (il doppio dell'arancia!), Vitamina K, Fibre", benefits: "Rafforza le difese immunitarie, regola il transito intestinale.", properties: "Antiossidante, lassativo naturale, protettivo per il sistema respiratorio.", tip: "Mangiarne uno a cena favorisce la digestione e il sonno grazie alla serotonina." },
+            { name: "Pera", category: "frutta", months: [9,10,11,12], calories: 57, nutrients: "Fibre (pectina), Potassio, Vitamina C", benefits: "Depurativa, saziante, amica dell'intestino.", properties: "Diuretica, antinfiammatoria, a basso contenuto calorico.", tip: "La pectina aiuta a controllare l'assorbimento degli zuccheri: mangiala prima del pasto." },
+            { name: "Limone", category: "frutta", months: [1,2,3,4,11,12], calories: 29, nutrients: "Vitamina C, Acido Citrico, Flavonoidi", benefits: "Alcalinizza il corpo, favorisce la digestione, depura il fegato.", properties: "Antiossidante, antibatterico, diuretico.", tip: "Acqua e limone al mattino: un 'trucco biologico' per attivare il metabolismo." },
+            { name: "Mandarino", category: "frutta", months: [11,12,1,2], calories: 53, nutrients: "Vitamina C, Vitamina A, Potassio", benefits: "Rafforza le difese immunitarie, favorisce la diuresi.", properties: "Antiossidante, diuretica, leggermente lassativa.", tip: "Pratico e porzionato naturalmente: lo snack perfetto da portare in borsa." },
+
+            // VERDURA
+            { name: "Carciofo", category: "verdura", months: [1,2,3,4,11,12], calories: 47, nutrients: "Cinarina, Fibre, Potassio, Folati", benefits: "Protegge il fegato, favorisce la digestione dei grassi.", properties: "Colagogo, diuretico, depurativo, ipocolesterolemizzante.", tip: "Il tuo alleato dopo un pasto libero: la cinarina aiuta il fegato a gestire i grassi." },
+            { name: "Asparago", category: "verdura", months: [3,4,5], calories: 25, nutrients: "Acido Folico, Vitamina K, Asparagina", benefits: "Depura i reni, combatte la ritenzione idrica.", properties: "Diuretico, antinfiammatorio, a bassissimo contenuto calorico.", tip: "Cucinalo al vapore per non disperdere i folati. Ottimo come contorno in primavera." },
+            { name: "Zucchina", category: "verdura", months: [5,6,7,8], calories: 17, nutrients: "Acqua (95%), Potassio, Vitamina A", benefits: "Idratante, saziante, estremamente leggera.", properties: "Diuretica, rinfrescante, antinfiammatoria.", tip: "Usa gli spaghetti di zucchina al posto della pasta per un pasto serale ultra-leggero." },
+            { name: "Pomodoro", category: "verdura", months: [6,7,8,9], calories: 18, nutrients: "Licopene, Vitamina C, Potassio", benefits: "Protegge la pelle dai raggi UV, salute della prostata.", properties: "Antiossidante (il licopene si attiva con il calore), rinfrescante.", tip: "Condisci con un filo d'olio EVO: il grasso buono aumenta l'assorbimento del licopene del 300%." },
+            { name: "Melanzana", category: "verdura", months: [7,8,9], calories: 25, nutrients: "Fibre, Antociani (nella buccia), Potassio", benefits: "Controlla il colesterolo, saziante.", properties: "Antiossidante, protettiva per il fegato, a basso contenuto calorico.", tip: "Evita di friggerla. Grigliata o al forno preserva i benefici senza aggiungere calorie vuote." },
+            { name: "Peperone", category: "verdura", months: [7,8,9], calories: 22, nutrients: "Vitamina C (più degli agrumi!), Vitamina A, Capsaicina", benefits: "Rafforza le difese immunitarie, accelera leggermente il metabolismo.", properties: "Antiossidante, antinfiammatorio, stimolante.", tip: "Se ti crea gonfiore, togli la pellicina esterna e i semi interni prima della cottura." },
+            { name: "Zucca", category: "verdura", months: [10,11,12], calories: 26, nutrients: "Beta-carotene, Fibre, Vitamina E", benefits: "Protegge la vista, saziante, dolce ma a basso indice glicemico.", properties: "Antiossidante, lassativa, rimineralizzante.", tip: "Perfetta per vellutate autunnali: le fibre rallentano l'assorbimento degli zuccheri naturali." },
+            { name: "Spinacio", category: "verdura", months: [1,2,3,10,11,12], calories: 23, nutrients: "Ferro (non eme), Acido Folico, Vitamina K", benefits: "Combatte l'anemia (se abbinato a vitamina C), rafforza le ossa.", properties: "Antiossidante, antinfiammatorio, rimineralizzante.", tip: "Aggiungi sempre una spruzzata di limone: la vitamina C trasforma il ferro vegetale in una forma assimilabile." },
+            { name: "Finocchio", category: "verdura", months: [1,2,3,10,11,12], calories: 12, nutrients: "Fibre, Potassio, Anetolo", benefits: "Sgonfia la pancia, favorisce la digestione.", properties: "Carminativo (elimina i gas intestinali), diuretico, a zero calorie.", tip: "Sgranocchiarlo crudo a fine pasto è il miglior 'ammazzacena' naturale e digestivo." },
+            { name: "Broccolo", category: "verdura", months: [1,2,3,11,12], calories: 34, nutrients: "Sulforafano, Vitamina C, Vitamina K", benefits: "Potente detossificante, supporta il sistema immunitario.", properties: "Anticancerogeno, antinfiammatorio, depurativo.", tip: "Cucinalo al vapore per max 5 minuti per non distruggere il prezioso sulforafano." },
+            { name: "Cavolfiore", category: "verdura", months: [1,2,3,10,11,12], calories: 25, nutrients: "Vitamina C, Vitamina K, Fibre, Folati", benefits: "Detossificante, saziante, versatile in cucina.", properties: "Antiossidante, antinfiammatorio, ipocalorico.", tip: "Sostituto perfetto del riso o della pizza base: frullato diventa una base low-carb geniale." },
+            { name: "Radicchio", category: "verdura", months: [1,2,10,11,12], calories: 23, nutrients: "Antociani, Fibre, Potassio, Ferro", benefits: "Protegge il fegato, favorisce la digestione, contrasta i radicali liberi.", properties: "Amaro-tonico, depurativo, antiossidante.", tip: "Il suo sapore amaro stimola bile e digestione: perfetto dopo pasti abbondanti." },
+            { name: "Cipolla", category: "verdura", months: [1,2,3,4,5,6,7,8,9,10,11,12], calories: 40, nutrients: "Quercetina, Zolfo, Vitamina C", benefits: "Antinfiammatoria naturale, protegge il cuore, regola la glicemia.", properties: "Antiossidante, antibiotica naturale, diuretica.", tip: "La quercetina è un potente antinfiammatorio: usala cruda in insalata per massimizzarne i benefici." }
+        ];
+
+        const months = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+        
+        // Mese corrente (Settembre = indice 8)
+        let currentMonthIndex = new Date().getMonth(); // Usa il mese reale
+        let activeTab = 'frutta';
+
+        function init() {
+            renderMonths();
+            renderContent();
+        }
+
+        function renderMonths() {
+            const container = document.getElementById('monthSelector');
+            container.innerHTML = months.map((m, index) => `
+                <button onclick="setMonth(${index})" 
+                    class="month-btn py-2.5 px-1 sm:px-3 rounded-xl text-xs sm:text-sm font-semibold text-center border ${
+                        index === currentMonthIndex 
+                        ? 'bg-elite-primary border-elite-primary text-elite-dark shadow-md scale-105' 
+                        : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+                    }">
+                    ${m}
+                </button>
+            `).join('');
+        }
+
+        function setMonth(index) {
+            currentMonthIndex = index;
+            renderMonths();
+            renderContent();
+            // Scroll fluido verso i risultati
+            setTimeout(() => {
+                document.getElementById('contentGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function setTab(tab) {
+            activeTab = tab;
+            document.getElementById('tab-frutta').className = `flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${tab === 'frutta' ? 'bg-white text-elite-dark shadow-sm' : 'text-gray-500 hover:text-elite-dark'}`;
+            document.getElementById('tab-verdura').className = `flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${tab === 'verdura' ? 'bg-white text-elite-dark shadow-sm' : 'text-gray-500 hover:text-elite-dark'}`;
+            renderContent();
+        }
+
+        function renderContent() {
+            const grid = document.getElementById('contentGrid');
+            const counter = document.getElementById('counter');
+            const currentMonthNum = currentMonthIndex + 1;
+            
+            const filtered = database.filter(item => 
+                item.category === activeTab && item.months.includes(currentMonthNum)
+            );
+
+            counter.textContent = `${filtered.length} ${activeTab === 'frutta' ? 'frutti' : 'verdure'} di stagione a ${months[currentMonthIndex]}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-500 fade-in">
+                        <p class="text-lg font-semibold">Nessun elemento trovato.</p>
+                        <p class="text-sm mt-2">Prova a cambiare mese o categoria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="card-hover bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden fade-in">
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-3 gap-2">
+                            <h3 class="text-xl font-bold text-elite-dark">${item.name}</h3>
+                            <span class="bg-elite-light text-elite-primary text-xs font-bold px-2.5 py-1 rounded-full border border-emerald-100 whitespace-nowrap">${item.calories} kcal/100g</span>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700 block mb-1">🧪 Valori Nutrizionali</span>
+                                <p class="text-gray-600 leading-relaxed">${item.nutrients}</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700 block mb-1">✅ Benefici</span>
+                                <p class="text-gray-600 leading-relaxed">${item.benefits}</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700 block mb-1">🛡️ Proprietà</span>
+                                <p class="text-gray-600 leading-relaxed">${item.properties}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 px-5 py-3 border-t border-amber-100">
+                        <p class="text-xs font-semibold text-amber-900 flex items-start gap-2 leading-relaxed">
+                            <span class="text-amber-600 text-base mt-0.5 shrink-0">💡</span>
+                            <span><strong>Elite Fit Tip:</strong> ${item.tip}</span>
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Inizializza l'app
+        init();
+    </script>
+</body>
+</html>
